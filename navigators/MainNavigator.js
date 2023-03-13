@@ -4,6 +4,7 @@ import AuthStack from "./AuthStack";
 import HomeStack from "./HomeStack";
 import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
+import CollectUserDetailsStack from "./CollectUserDetailsStack";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,7 +17,6 @@ const MainNavigator = () => {
                 headerShown: false,
                 gestureEnabled: false,
             }}
-            initialRouteName="AuthStack"
         >
             {
                 !user ?
@@ -25,9 +25,10 @@ const MainNavigator = () => {
                         component={AuthStack}
                     />
                     :
+                    
                     <Stack.Screen
-                        name="HomeStack"
-                        component={HomeStack}
+                        name="CollectUserDetailsStack"
+                        component={CollectUserDetailsStack}
                     />
             }
 

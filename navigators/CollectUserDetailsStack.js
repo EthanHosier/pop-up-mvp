@@ -1,9 +1,9 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import Home from "../screens/main/Home";
+import UserDetails from "../screens/collectUserDetails/UserDetails";
 
 const Stack = createNativeStackNavigator();
 
-const HomeStack = () => {
+const CollectUserDetailsStack = () => {
 
     return(
         <Stack.Navigator
@@ -11,15 +11,15 @@ const HomeStack = () => {
                 headerShown:false,
                 animationEnabled:false
             }}
-            initialRouteName="Welcome"
+            initialRouteName="UserDetails"
         
         >
             <Stack.Screen 
-                name="Home"
-                component={Home}
+                name="UserDetails"
+                component={UserDetails}
             />
         </Stack.Navigator>
     )
 }
 
-export default HomeStack
+export default CollectUserDetailsStack
