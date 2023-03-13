@@ -1,16 +1,17 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import Welcome from './screens/auth/Welcome'
-import LoginOptions from './screens/auth/LoginOptions'
 import { NavigationContainer } from '@react-navigation/native'
 import MainNavigator from './navigators/MainNavigator'
+import { AuthProvider } from './context/AuthProvider'
 
 const App = () => {
-  return (
-    <NavigationContainer>
-        <MainNavigator/>
-    </NavigationContainer>
-  )
+    return (
+        <NavigationContainer>
+            <AuthProvider>
+                <MainNavigator />
+            </AuthProvider>
+        </NavigationContainer>
+    )
 }
 
 export default App

@@ -3,8 +3,11 @@ import React, { useState } from 'react'
 import { RulePassword, RuleConfirmPassword, RuleEmail } from "../../utils/rules"
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Entypo from 'react-native-vector-icons/Entypo';
+import useAuth from '../../hooks/useAuth';
 
 const LoginUsernamePassword = () => {
+
+    const { signInEmailPassword } = useAuth();
 
     const [email, setEmail] = useState("");
     const [pwd, setPwd] = useState("");
@@ -13,13 +16,26 @@ const LoginUsernamePassword = () => {
     const [pwdError, setPwdError] = useState("");
     const [checkboxPressed, setCheckboxPressed] = useState(false)
     const [isLoading, setIsLoading] = useState();
-    const [loginError, setLoginError] = useState("login error");
+    const [loginError, setLoginError] = useState("");
 
     //TODO: Fix this so not calculated on every render
-    const disabled = isLoading || emailError || pwdError || !checkboxPressed || !email || !pwd 
+    const disabled = isLoading || emailError || pwdError || !checkboxPressed || !email || !pwd
 
     const handleLogin = async () => {
+        
         setIsLoading(true)
+        const id = setTimeout(() => {
+            setIsLoading(false)
+            setLoginError("Timeout Error")
+        }, 15000);
+
+
+        const errorCode = await signInEmailPassword(email, pwd);
+        clearTimeout(id)
+
+        if (!errorCode) return;
+        setIsLoading(false)
+        setLoginError("Invalid email and password")
     }
 
     const handleGoTerm = () => {
@@ -98,11 +114,11 @@ const LoginUsernamePassword = () => {
                                 onChangeText={handlePassword}
                                 value={pwd}
                                 autoComplete="password-new"
-                                secureTextEntry = {!showPwd}
+                                secureTextEntry={!showPwd}
 
                             />
                             <TouchableOpacity className=" py-2 pl-1 pr-3" onPress={() => setShowPwd(prev => !prev)}>
-                                <Entypo name= {showPwd? "eye" : "eye-with-line"} size={24} color="#4C214C"/>
+                                <Entypo name={showPwd ? "eye" : "eye-with-line"} size={24} color="#4C214C" />
                             </TouchableOpacity>
                         </View>
 
@@ -119,7 +135,7 @@ const LoginUsernamePassword = () => {
                             iconStyle={{ borderRadius: 4 }}
                             innerIconStyle={{ borderWidth: 2, borderRadius: 4 }}
                             onPress={setCheckboxPressed}
-                            
+
 
                         />
                         <Text className="flex-1">
@@ -140,12 +156,12 @@ const LoginUsernamePassword = () => {
                         style={{ backgroundColor: /*disabled ? "black" :*/ "#4C214C" }}
                     >
                         {
-                            isLoading?
-                            <ActivityIndicator/>
-                            :<Text className="uppercase text-white text-md">Login</Text>
+                            isLoading ?
+                                <ActivityIndicator />
+                                : <Text className="uppercase text-white text-md">Login</Text>
 
                         }
-                    
+
                     </TouchableOpacity>
                     <View className="h-8 items-center justify-center -mb-8">
                         <Text className="text-primary text-xs">{loginError}</Text>

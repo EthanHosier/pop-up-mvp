@@ -1,10 +1,13 @@
-import { View, Text, TextInput, TouchableOpacity, SafeAreaView, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, SafeAreaView, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, ActivityIndicator } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { RulePassword, RuleConfirmPassword, RuleEmail } from "../../utils/rules"
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Entypo from 'react-native-vector-icons/Entypo';
+import useAuth from '../../hooks/useAuth';
 
 const CreateAccountUsernamePassword = () => {
+    const {createUserEmailPassword} = useAuth();
+    
     const [email, setEmail] = useState("");
     const [pwd, setPwd] = useState("");
     const [confirmPwd, setConfirmPwd] = useState();
@@ -13,13 +16,37 @@ const CreateAccountUsernamePassword = () => {
     const [emailError, setEmailError] = useState("");
     const [pwdError, setPwdError] = useState("");
     const [confirmPwdError, setConfirmPwdError] = useState("")
-
     const [checkboxPressed, setCheckboxPressed] = useState(false)
+
+    const [isLoading, setIsLoading] = useState();
+    const [createAccountError, setCreateAccountError] = useState("");
 
     const disabled = emailError || !email || pwdError || !pwd || confirmPwdError || !confirmPwd || !checkboxPressed
 
     const handleCreateAccount = async () => {
-
+        setIsLoading(true)
+        const id = setTimeout(() => {
+          setIsLoading(false)
+          setCreateAccountError("Creating account took too long!")
+        }, 15000);
+    
+        
+        const errorCode = await createUserEmailPassword(email,pwd);
+        clearInterval(id)
+        
+        setIsLoading(false)
+        switch (errorCode){
+          case 'auth/email-already-in-use':
+            setCreateAccountError("Email address is already in use!")
+            break;
+    
+          case 'auth/invalid-email':
+            setCreateAccountError("Email address invalid!")
+            break;
+    
+          default:
+            setCreateAccountError("Error while creating account!")
+        }
 
     }
 
@@ -169,13 +196,22 @@ const CreateAccountUsernamePassword = () => {
 
 
                     <TouchableOpacity
+                        activeOpacity={0.8}
                         className="w-full bg-sky-400 rounded-full items-center justify-center  h-12 mt-10"
                         onPress={handleCreateAccount}
                         disabled={disabled}
                         style={{ backgroundColor: /*disabled ? "black" :*/ "#4C214C" }}
                     >
+                    {
+                        isLoading?
+                        <ActivityIndicator/>
+                        :
                         <Text className="text-white text-lg">Create Account</Text>
+                    }
                     </TouchableOpacity>
+                    <View className="h-8 items-center justify-center -mb-8">
+                        <Text className="text-primary text-xs">{createAccountError}</Text>
+                    </View>
                 </KeyboardAvoidingView >
             </TouchableWithoutFeedback>
 
