@@ -10,7 +10,6 @@
 		00E356F31AD99517003FC87E /* smDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* smDemoTests.m */; };
 		10BF32C360373064384C97E6 /* Pods_smDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66ADB48A757D7FFF5C6A19C2 /* Pods_smDemo.framework */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
-		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		6525F9AC2BC6A657334F83D8 /* Pods_smDemo_smDemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E0E46BDF65590E13C54A0C2 /* Pods_smDemo_smDemoTests.framework */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -31,6 +30,8 @@
 		EB87183129BF14BD0039F2F1 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB87182129BF14BB0039F2F1 /* EvilIcons.ttf */; };
 		EB87183229BF14BD0039F2F1 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB87182229BF14BB0039F2F1 /* SimpleLineIcons.ttf */; };
 		EB87183329BF14BD0039F2F1 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB87182329BF14BB0039F2F1 /* MaterialIcons.ttf */; };
+		EB9CC49729C09BEA004AF582 /* NearbyMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9CC49629C09BEA004AF582 /* NearbyMessages.swift */; };
+		EB9CC49929C09C50004AF582 /* NearbyMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = EB9CC49829C09C50004AF582 /* NearbyMessages.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,9 @@
 		EB87182129BF14BB0039F2F1 /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
 		EB87182229BF14BB0039F2F1 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		EB87182329BF14BB0039F2F1 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
+		EB9CC49529C09BE9004AF582 /* smDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "smDemo-Bridging-Header.h"; sourceTree = "<group>"; };
+		EB9CC49629C09BEA004AF582 /* NearbyMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyMessages.swift; sourceTree = "<group>"; };
+		EB9CC49829C09C50004AF582 /* NearbyMessages.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NearbyMessages.m; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -128,6 +132,9 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				EB9CC49629C09BEA004AF582 /* NearbyMessages.swift */,
+				EB9CC49529C09BE9004AF582 /* smDemo-Bridging-Header.h */,
+				EB9CC49829C09C50004AF582 /* NearbyMessages.m */,
 			);
 			name = smDemo;
 			sourceTree = "<group>";
@@ -267,7 +274,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1420;
 					};
 				};
 			};
@@ -316,7 +323,6 @@
 				EB87182B29BF14BD0039F2F1 /* Foundation.ttf in Resources */,
 				EB87182629BF14BD0039F2F1 /* Feather.ttf in Resources */,
 				EB87183129BF14BD0039F2F1 /* EvilIcons.ttf in Resources */,
-				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				EB87182F29BF14BD0039F2F1 /* FontAwesome.ttf in Resources */,
 				EB87182429BF14BD0039F2F1 /* Fontisto.ttf in Resources */,
 				EB87182929BF14BD0039F2F1 /* MaterialCommunityIcons.ttf in Resources */,
@@ -502,7 +508,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB9CC49929C09C50004AF582 /* NearbyMessages.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
+				EB9CC49729C09BEA004AF582 /* NearbyMessages.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -522,6 +530,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-smDemo-smDemoTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -549,6 +558,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-smDemo-smDemoTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = smDemoTests/Info.plist;
@@ -591,6 +601,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = smDemo;
+				SWIFT_OBJC_BRIDGING_HEADER = "smDemo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -618,6 +629,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = smDemo;
+				SWIFT_OBJC_BRIDGING_HEADER = "smDemo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

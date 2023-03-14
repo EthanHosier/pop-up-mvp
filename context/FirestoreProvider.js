@@ -49,12 +49,18 @@ export const FirestoreProvider = ({children}) => {
         
     }
 
+    const getUserData = async(id) => {
+        const data = (await firestore().collection("users").doc(id).get()).data();
+        return data;
+    }
+
     const memoedFirestore = useMemo(() => ({
         name,
         gender,
         loadData,
         setInitialProfile,
-        clearLocalStorage
+        clearLocalStorage,
+        getUserData,
     }),[gender,name])
 
     return(

@@ -23,7 +23,7 @@ const ENTERING_ANIMATION = FadeInDown.delay(250);
 
 const Story = () => {
     const navigation = useNavigation();
-    const { id } = useRoute().params;
+    const { id, gender, name, picUrl } = useRoute().params;
     const translateX = useSharedValue(0);
     const translateY = useSharedValue(0);
     const isGestureActive = useSharedValue(false)
@@ -82,7 +82,7 @@ const Story = () => {
                 <Animated.View className="relative">
                     <SharedElement id={`item.${id}`}>
                         <Animated.Image
-                            source={require("../../assets/images/mirrorSelfie-min.jpg")}
+                            source={picUrl? {uri:picUrl}: require("../../assets/images/mirrorSelfie-min.jpg")}
                             height={20}
                             width={20}
                             style={[{ height: height, width }, borderStyle]}
@@ -106,7 +106,7 @@ const Story = () => {
             </PanGestureHandler>
 
             <Animated.View className="absolute bottom-50 w-full" entering={ENTERING_ANIMATION}>
-                <DetailsSheet />
+                <DetailsSheet name={name} gender={gender} />
             </Animated.View>
 
 

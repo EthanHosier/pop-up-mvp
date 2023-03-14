@@ -7,7 +7,7 @@ import Animated, { useAnimatedStyle, useSharedValue, useAnimatedGestureHandler, 
 const { height } = Dimensions.get("window")
 const WHITE_OVERFLOW_HEIGHT = 100;
 
-const DetailsSheet = () => {
+const DetailsSheet = ({name,gender}) => {
   const translateY = useSharedValue(0)
   const [maxDisplacement, setMaxDisplacement] = useState(0)
   const [isOverExtending, setIsOverExtending] = useState(false)
@@ -64,12 +64,12 @@ const DetailsSheet = () => {
   return (
     <PanGestureHandler onGestureEvent={gestureHandler}>
       <Animated.View className="w-full absolute items-center" style={[{ top: height / 1.5 }, rBottomSheetStyle]} onLayout={handleLayout}>
-        <Text className="text-white/80 text-4xl font-semibold">Ethan Hosier</Text>
+        <Text className="text-white/80 text-4xl font-semibold">{name || "Ethan Hosier"}</Text>
         <Text className="text-white/80 text-xl">Personal Trainer</Text>
         <View className="bg-white/80 w-full mt-16 px-6 pb-8" style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 }}>
 
           <View className="flex-row justify-around mt-8">
-            <Text style={{ fontSize: 16 }}>🗣️ He/Him</Text>
+            <Text style={{ fontSize: 16 }}>🗣️ {gender == "Male"? "He/Him" : gender=="Female"? "She/Her" : "They/Them"}</Text>
             <Text style={{ fontSize: 16 }}> ❤️ Single</Text>
             <Text style={{ fontSize: 16 }}>😁 19</Text>
           </View>

@@ -27,6 +27,7 @@ target 'smDemo' do
   use_frameworks! :linkage => :static
   $RNFirebaseAsStaticFramework = true
 
+  pod 'NearbyMessages'
 
   # Flags change depending on the env values.
   flags = get_default_flags()

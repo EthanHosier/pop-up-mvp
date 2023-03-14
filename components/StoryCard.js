@@ -8,7 +8,7 @@ import LinearGradient from 'react-native-linear-gradient';
 const margin = 16;
 const width = Dimensions.get("window").width / 2 - margin * 2;
 
-const StoryCard = ({ id }) => {
+const StoryCard = ({ id, name, gender, picUrl }) => {
   const navigation = useNavigation();
   const [opacity, setOpacity] = useState(1);
 
@@ -23,16 +23,14 @@ const StoryCard = ({ id }) => {
       style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
       onPress={() => {
         setOpacity(0);
-        navigation.navigate("Story", { id });
+        navigation.navigate("Story", { id,name, picUrl, gender });
       }}
     >
-
-
 
       <View style={{ opacity }} className="relative">
         <SharedElement id={`item.${id}`}>
           <Image
-            source={require("../assets/images/mirrorSelfie-min.jpg")}
+            source={picUrl? {uri: picUrl} : require("../assets/images/mirrorSelfie-min.jpg")}
             style={{ width, height: width * 1.77, overflow: "hidden" }}
             height={20}
             width={20}
@@ -47,7 +45,7 @@ const StoryCard = ({ id }) => {
         </SharedElement>
 
         <View className="absolute bottom-0 w-full pl-2 mb-2">
-          <Text className="text-white font-semibold">Ethan Hosier, 19</Text>
+          <Text className="text-white font-semibold">{name + ", 19" || "Ethan Hosier, 19"}</Text>
           <Text className="text-white">⚡ Personal Trainer</Text>
         </View>
 

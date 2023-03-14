@@ -1,66 +1,70 @@
-import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, SafeAreaView, TouchableOpacity, NativeModules, NativeEventEmitter } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import StoryCard from '../../components/StoryCard';
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+const { NearbyMessages } = NativeModules;
+const NearbyMessagesEvents = new NativeEventEmitter(NearbyMessages);
+
 import {
-  BallIndicator,
-  BarIndicator,
-  DotIndicator,
-  MaterialIndicator,
-  PacmanIndicator,
-  PulseIndicator,
-  SkypeIndicator,
-  UIActivityIndicator,
   WaveIndicator,
 } from 'react-native-indicators';
+import useAuth from '../../hooks/useAuth';
+import useFirestore from '../../hooks/useFirestore';
 
 const DiscoverUsers = () => {
+  const { user, signout } = useAuth();
+  const { getUserData } = useFirestore();
   const [searching, setSearching] = useState(false)
+  const [detectedUsers, setDetectedUsers] = useState([])
+
+
+
+  useEffect(() => {
+    NearbyMessagesEvents.addListener("AdvertisingStatus", console.log)
+    NearbyMessagesEvents.addListener("UserDetected", handleUserDetected)
+    NearbyMessagesEvents.addListener("ListeningStatus", console.log)
+
+    return () => {
+      NearbyMessagesEvents.removeAllListeners("BleStatus")
+      NearbyMessagesEvents.removeAllListeners("UserDetected")
+      NearbyMessagesEvents.removeAllListeners("ListeningStatus")
+    }
+
+  }, [])
+
+  const startAdvertisingAndListening = () => {
+    NearbyMessages.startAdvertising(user.uid);
+    NearbyMessages.startListening();
+  }
+
+  const stopAdvertisingAndListening = () => {
+    NearbyMessages.stopAdvertising();
+    NearbyMessages.stopListening();
+  }
+
+  const handlePowerButtonPressed = () => {
+    if (searching) {
+      stopAdvertisingAndListening();
+      setSearching(false);
+      return;
+    }
+
+    startAdvertisingAndListening();
+    setSearching(true);
+  }
+
+  const handleUserDetected = async (id) => {
+    const data = await getUserData(id);
+    console.log(data);
+    setDetectedUsers(old => [...old, data])
+  }
+
   return (
     <SafeAreaView className="bg-secondary">
 
-
-
-      {/*
-      <View className="rounded-b-3xl">
-        <View className="px-6 flex-row justify-between items-end">
-          <Text className="text-primary font-bold text-2xl">Friendzy</Text>
-          <TouchableOpacity className="rounded-full border border-gray-300 aspect-square items-center justify-center p-2">
-            <FontAwesome name="bell-o" size={24} color="#4C214C" />
-          </TouchableOpacity>
-        </View>
-        <View className="h-20 mt-4">
-          <ScrollView
-            horizontal
-            className="px-6"
-            showsHorizontalScrollIndicator={false}
-          >
-            <TouchableOpacity>
-              <View className="relative items-center justify-center mr-3" style={{ padding: 2 }}>
-                <Image source={require("../../assets/portable-profile/face2.png")} className="aspect-square h-14 rounded-full" />
-                <View className="absolute bg-tertiary rounded-full border border-secondary" style={{ bottom: 1, right: 1 }}>
-                  <Entypo name="plus" size={20} color="white" />
-                </View>
-              </View>
-            </TouchableOpacity>
-            {[... new Array(10)].map((e, i) => {
-              return (
-                <TouchableOpacity>
-                  <View key={i} className="rounded-full items-center justify-center border border-tertiary border-2 mr-3" style={{ padding: 2 }}>
-                    <Image source={require("../../assets/portable-profile/face.jpeg")} className="aspect-square h-14 rounded-full" />
-                  </View>
-                </TouchableOpacity>
-              )
-            })}
-          </ScrollView>
-        </View>
-      </View>
-      * */}
-
-
-      {/*CHANGE TO FLATLIST ONCE HAVE ACTUAL DATA */}
+      <Text onPress={signout}>signout</Text>
 
       <View className="h-24 items-center justify-center relative px-6">
         {/*<BarIndicator color="#4C214C" count={5} />*/}
@@ -68,7 +72,7 @@ const DiscoverUsers = () => {
         <TouchableOpacity
           className="rounded-full bg-gray-100 aspect-square h-16 items-center justify-center shadow-md  absolute z-10"
           activeOpacity={0.5}
-          onPress={() => setSearching(s => !s)}
+          onPress={handlePowerButtonPressed}
         >
           <Ionicons name="power" size={32} color={searching ? "#E29BD7" : "#d9d9d9"} style={{ marginLeft: 2, marginTop: 2, textShadowColor: "red" }} />
         </TouchableOpacity>
@@ -83,7 +87,9 @@ const DiscoverUsers = () => {
       </View>
 
       <View className="bg-white rounded-3xl px-6 h-full">
-        <FlatList
+
+        {/* 
+       <FlatList
 
           ListHeaderComponent={<Text className="font-bold pt-2 ml-1">Nearby Users</Text>
           }
@@ -97,7 +103,19 @@ const DiscoverUsers = () => {
           showsVerticalScrollIndicator={false}
           style={{ backgroundColor: "white", borderRadius: 10 }}
         />
+      */}
+        <FlatList
+        ListHeaderComponent={<Text className="font-bold pt-2 ml-1">Nearby Users</Text>}
+        data={detectedUsers}
+          renderItem={({ item, index }) => (
+            <View className="m-1"><StoryCard id={index} name={item.name} gender={item.gender} picUrl={item.picUrl} /></View>
+          )}
+          keyExtractor={(_, index) => index}
+          numColumns={2}
+          showsVerticalScrollIndicator={false}
+          style={{ backgroundColor: "white", borderRadius: 10 }}
 
+        />
       </View>
 
 
