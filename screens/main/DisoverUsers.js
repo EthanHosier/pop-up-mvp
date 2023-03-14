@@ -61,42 +61,45 @@ const DiscoverUsers = () => {
 
 
       {/*CHANGE TO FLATLIST ONCE HAVE ACTUAL DATA */}
-      
-        <View className="h-24 items-center justify-center relative px-6">
-          {/*<BarIndicator color="#4C214C" count={5} />*/}
-          <View className="aspect-square h-16 rounded-full bg-gray-200 bottom-3 absolute z-10"/>
-          <TouchableOpacity 
+
+      <View className="h-24 items-center justify-center relative px-6">
+        {/*<BarIndicator color="#4C214C" count={5} />*/}
+        <View className="aspect-square h-16 rounded-full bg-gray-200 bottom-3 absolute z-10" />
+        <TouchableOpacity
           className="rounded-full bg-gray-100 aspect-square h-16 items-center justify-center shadow-md  absolute z-10"
           activeOpacity={0.5}
           onPress={() => setSearching(s => !s)}
-          >
-            <Ionicons name="power" size={32} color={searching? "#E29BD7":"#d9d9d9"} style={{marginLeft:2, marginTop:2 , textShadowColor:"red"}} />
-          </TouchableOpacity>
-          {searching && 
-          <WaveIndicator 
-          color="#E29BD7" 
-          size={90} 
-          style={{marginTop:2}}
-          waveFactor={0.8}
+        >
+          <Ionicons name="power" size={32} color={searching ? "#E29BD7" : "#d9d9d9"} style={{ marginLeft: 2, marginTop: 2, textShadowColor: "red" }} />
+        </TouchableOpacity>
+        {searching &&
+          <WaveIndicator
+            color="#E29BD7"
+            size={90}
+            style={{ marginTop: 2 }}
+            waveFactor={0.8}
           />
-          }
-        </View>
+        }
+      </View>
 
-        <View className="bg-white rounded-3xl px-6">
-        <Text className="font-bold pt-2">Nearby Users</Text>
-        <FlatList 
-        data={[... new Array(16)]}
-        renderItem={({item,index}) => 
-        (<View className="m-1"><StoryCard id={index}/></View>
-  )}
-        keyExtractor={(_,index) => index}
-        numColumns={2}
-        showsVerticalScrollIndicator={false}
-        
+      <View className="bg-white rounded-3xl px-6 h-full">
+        <FlatList
+
+          ListHeaderComponent={<Text className="font-bold pt-2 ml-1">Nearby Users</Text>
+          }
+
+          data={[... new Array(1)]}
+          renderItem={({ item, index }) =>
+          (<View className="m-1"><StoryCard id={index} /></View>
+          )}
+          keyExtractor={(_, index) => index}
+          numColumns={2}
+          showsVerticalScrollIndicator={false}
+          style={{ backgroundColor: "white", borderRadius: 10 }}
         />
-        
-         </View>
-      
+
+      </View>
+
 
 
 
