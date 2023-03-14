@@ -153,7 +153,7 @@ const CreateAccountUsernamePassword = () => {
 
                     <View className="h-16 mt-4 mx-3">
                         <View className="flex-row items-center bg-white rounded-lg"
-                            style={{ borderWidth: 1, borderColor: pwdError ? "#4C214C" : "transparent" }}
+                            style={{ borderWidth: 1, borderColor: confirmPwdError ? "#4C214C" : "transparent" }}
 
                         >
                             <TextInput
