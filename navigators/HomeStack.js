@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import Home from "../screens/main/Home";
+import DiscoverUsersStack from "./DiscoverUsersStack"
 
 const Stack = createNativeStackNavigator();
 
@@ -11,12 +11,12 @@ const HomeStack = () => {
                 headerShown:false,
                 animationEnabled:false
             }}
-            initialRouteName="Welcome"
+            initialRouteName="DiscoverUsersStack"
         
         >
             <Stack.Screen 
-                name="Home"
-                component={Home}
+                name="DiscoverUsersStack"
+                component={DiscoverUsersStack}
             />
         </Stack.Navigator>
     )

@@ -18,7 +18,7 @@ const GENDERS = [
     },
 ]
 
-const WhatsYourGender = ({ name }) => {
+const WhatsYourGender = ({ name, setGender }) => {
 
     const [selected, setSelected] = useState(-1)
 
@@ -35,7 +35,10 @@ const WhatsYourGender = ({ name }) => {
                 return <TouchableOpacity
                 className="w-32 aspect-square rounded-xl bg-white items-center justify-center mb-4 relative"
                 style={{ borderColor: index === selected ? "#E29BD7" : "transparent", borderWidth: 2 }}
-                onPress={() => setSelected(index)}
+                onPress={() => {
+                    setSelected(index)
+                    setGender(GENDERS[index].gender)
+                }}
                 activeOpacity={0.8}
             >
                 

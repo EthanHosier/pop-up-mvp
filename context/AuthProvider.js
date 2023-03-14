@@ -1,15 +1,23 @@
 import { createContext, useState, useEffect, useMemo } from 'react';
 import auth from '@react-native-firebase/auth';
+import useFirestore from '../hooks/useFirestore';
 
 const AuthContext = createContext({})
 
 export const AuthProvider = ({ children }) => {
+    const {loadData, clearLocalStorage} = useFirestore();
+
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useState();
 
     const onAuthStateChanged = async (user) => {
-        console.log(user)
-        setUser(user)
+        setUser(user)        
+        if(!user) {
+            if (initializing) setInitializing(false)
+            return;
+        }
+        await loadData(user.uid)
+
         if (initializing) setInitializing(false)
     }
 
@@ -40,6 +48,7 @@ export const AuthProvider = ({ children }) => {
     //TODO: have more elaborate sign out procedure (ie, with different loading type and not reusing initializing)
     const signout = async () => {
         setInitializing(true)
+        clearLocalStorage();
         await auth().signOut();
         setInitializing(false)
     }

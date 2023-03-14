@@ -7,7 +7,7 @@ const LoginOptions = () => {
     const navigation = useNavigation();
 
     return (
-        <SafeAreaView className="flex-1 items-center justify-center h-full">
+        <SafeAreaView className="flex-1 items-center justify-center h-full bg-white">
 
             <View className="w-5/6 items-center">
                 <Image
